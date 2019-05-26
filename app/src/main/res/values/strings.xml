@@ -1,8 +1,28 @@
 <resources>
-    <string name="app_name">MyWeather</string>
+    <string name="app_name">Погода</string>
+
+    <string name="weather">Ясно, без осадков</string>
+    <string name="temperature">Температура +20</string>
+    <string name="wind">Ветер северо-восточный 4 м/с</string>
+    <string name="pressure">Давление 755 мм ртутного столба</string>
+    <string name="humidity">Влажность 73%</string>
+
+    <string name="warrning_message">Введите название города</string>
+
+    <string name="button_text">Узнать погоду</string>
+    <string name="text_view_city_text">Название города:</string>
+
+    <string name="title_wind">Скорость ветра</string>
+    <string name="title_pressure">Давление</string>
+    <string name="title_humidity">Влажность</string>
+
+    <string name="about_avtor">Меня зовут Георгий, мне 29 лет и это мое учебное погодное приложение</string>
+    <string name="feedback">Вы можете написать мне на электронную почту:"\n"rox_2@mail.ru"\n"rox4gk.gmail.com</string>
+    <string name="info">Приложение: MyWeather"\n"Текущая ерсия: </string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_title">Автор: Георгий Кузин</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -11,6 +31,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="menu_info">Info</string>
+    <string name="menu_feedback">Feedback</string>
+    <string name="menu_avtor">Avtor</string>
+    <string name="title_activity_info">InfoActivity</string>
 </resources>

@@ -1,21 +1,29 @@
 package app.geekbrains.myweather;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity 
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private TextView windView;
+    private TextView pressureView;
+    private TextView humidityView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +42,37 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        windView = findViewById(R.id.textWind);
+        pressureView = findViewById(R.id.textPressure);
+        humidityView = findViewById(R.id.textHumidity);
+
+        final TextView weatherView = findViewById(R.id.textWeather);
+        final TextView temperatureView = findViewById(R.id.textTemperature);
+        final EditText editCity = findViewById(R.id.editCity);
+        Button btnWeather = findViewById(R.id.button_weather);
+
+        btnWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editCity.getText().toString().isEmpty()) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "Введите название города", Toast.LENGTH_SHORT);
+                    toast.show();
+                } else {
+                    weatherView.setText(R.string.weather);
+                    temperatureView.setText(R.string.temperature);
+                    pressureView.setText(R.string.pressure);
+                    windView.setText(R.string.wind);
+                    humidityView.setText(R.string.humidity);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -49,6 +84,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -64,7 +100,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_wind) {
+            item.setChecked(!item.isChecked());
+            showView(windView, item.isChecked());
+            return true;
+        } else if (id == R.id.action_pressure) {
+            item.setChecked(!item.isChecked());
+            showView(pressureView, item.isChecked());
+            return true;
+        } else if (id == R.id.action_humidity) {
+            item.setChecked(!item.isChecked());
+            showView(humidityView, item.isChecked());
             return true;
         }
 
@@ -85,14 +131,30 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_tools) {
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_about_app) {
+            startInfo(getResources().getString(R.string.info) + " " + BuildConfig.VERSION_NAME);
+        } else if (id == R.id.nav_feedback) {
+            startInfo(getResources().getString(R.string.feedback));
+        } else if (id == R.id.nav_avtor) {
+            startInfo(getResources().getString(R.string.about_avtor));
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showView(TextView view, boolean show) {
+        if (show) {
+            view.setVisibility(View.VISIBLE);
+        } else {
+            view.setVisibility(View.GONE);
+        }
+    }
+
+    private void startInfo(String info) {
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra("Info", info);
+        startActivity(intent);
     }
 }
