@@ -71,5 +71,27 @@
         android:layout_gravity="center_horizontal"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/sensorInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/sensor"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/sensorTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/sensorHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
 
 </LinearLayout>
