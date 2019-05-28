@@ -22,4 +22,11 @@
         android:title="@string/title_wind"
         android:checkable="true"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sensor"
+        android:orderInCategory="400"
+        android:title="@string/title_sensor"
+        android:checkable="true"
+        app:showAsAction="never" />
 </menu>

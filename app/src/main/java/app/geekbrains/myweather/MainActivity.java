@@ -1,6 +1,10 @@
 package app.geekbrains.myweather;
 
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -24,6 +28,9 @@ public class MainActivity extends AppCompatActivity
     private TextView windView;
     private TextView pressureView;
     private TextView humidityView;
+    private TextView sensorInfo;
+    private TextView sensorTemperature;
+    private TextView sensorHumidity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +54,28 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        sensorInfo = findViewById(R.id.sensorInfo);
+        sensorTemperature = findViewById(R.id.sensorTemp);
+        sensorHumidity = findViewById(R.id.sensorHumidity);
         windView = findViewById(R.id.textWind);
         pressureView = findViewById(R.id.textPressure);
         humidityView = findViewById(R.id.textHumidity);
+
+        SensorManager sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) == null) {
+            sensorTemperature.setText(getResources().getText(R.string.warrning_sens_temp));
+        } else {
+            Sensor sensorTemp = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+            sensorManager.registerListener(listenerTemp, sensorTemp, SensorManager.SENSOR_DELAY_NORMAL);
+        }
+
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY) == null) {
+            sensorHumidity.setText(getResources().getText(R.string.warrning_sens_hum));
+        } else {
+            Sensor sensorHum = sensorManager.getDefaultSensor(Sensor.TYPE_RELATIVE_HUMIDITY);
+            sensorManager.registerListener(listenerHum, sensorHum, SensorManager.SENSOR_DELAY_NORMAL);
+        }
 
         final TextView weatherView = findViewById(R.id.textWeather);
         final TextView temperatureView = findViewById(R.id.textTemperature);
@@ -74,6 +100,44 @@ public class MainActivity extends AppCompatActivity
         });
 
     }
+
+
+    private void showSensors(SensorEvent event, TextView textView) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (textView.getId() == R.id.sensorTemp) {
+            stringBuilder.append("Температура окружающего воздуха = ").append(event.values[0]);
+        } else if (textView.getId() == R.id.sensorHumidity) {
+            stringBuilder.append("Влажность окружающего воздуха = ").append(event.values[0]);
+        }
+        textView.setText(stringBuilder);
+
+    }
+
+    // Слушатель датчика температуры
+    SensorEventListener listenerTemp = new SensorEventListener() {
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            showSensors(event, sensorTemperature);
+        }
+    };
+
+    // Слушатель датчика влажности
+    SensorEventListener listenerHum = new SensorEventListener() {
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            showSensors(event, sensorHumidity);
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -112,6 +176,11 @@ public class MainActivity extends AppCompatActivity
             item.setChecked(!item.isChecked());
             showView(humidityView, item.isChecked());
             return true;
+        } else if (id == R.id.action_sensor) {
+            item.setChecked(!item.isChecked());
+            sensorInfo.setVisibility(View.VISIBLE);
+            sensorTemperature.setVisibility(View.VISIBLE);
+            sensorHumidity.setVisibility(View.VISIBLE);
         }
 
         return super.onOptionsItemSelected(item);

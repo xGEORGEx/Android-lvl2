@@ -6,8 +6,11 @@
     <string name="wind">Ветер северо-восточный 4 м/с</string>
     <string name="pressure">Давление 755 мм ртутного столба</string>
     <string name="humidity">Влажность 73%</string>
+    <string name="sensor">Информация от датчиков телефона:</string>
 
     <string name="warrning_message">Введите название города</string>
+    <string name="warrning_sens_temp">В вашем устройстве отсутствует датчик температуры</string>
+    <string name="warrning_sens_hum">В вашем устройстве отсутствует датчик влажности</string>
 
     <string name="button_text">Узнать погоду</string>
     <string name="text_view_city_text">Название города:</string>
@@ -15,6 +18,7 @@
     <string name="title_wind">Скорость ветра</string>
     <string name="title_pressure">Давление</string>
     <string name="title_humidity">Влажность</string>
+    <string name="title_sensor">Информация от датчиков</string>
 
     <string name="about_avtor">Меня зовут Георгий, мне 29 лет и это мое учебное погодное приложение</string>
     <string name="feedback">Вы можете написать мне на электронную почту:"\n"rox_2@mail.ru"\n"rox4gk.gmail.com</string>
